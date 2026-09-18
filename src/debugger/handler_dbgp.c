@@ -1590,7 +1590,7 @@ DBGP_FUNC(feature_get)
 		XDEBUG_STR_CASE_END
 
 		XDEBUG_STR_CASE("key_type")
-			xdebug_xml_add_text(*retval, xdebug_sprintf("%ld", options->key_type));
+			xdebug_xml_add_text(*retval, xdebug_sprintf("%d", options->key_type));
 			xdebug_xml_add_attribute(*retval, "supported", "1");
 		XDEBUG_STR_CASE_END
 
