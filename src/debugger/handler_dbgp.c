@@ -1589,6 +1589,11 @@ DBGP_FUNC(feature_get)
 			xdebug_xml_add_attribute(*retval, "supported", "1");
 		XDEBUG_STR_CASE_END
 
+		XDEBUG_STR_CASE("key_type")
+			xdebug_xml_add_text(*retval, xdebug_sprintf("%ld", options->key_type));
+			xdebug_xml_add_attribute(*retval, "supported", "1");
+		XDEBUG_STR_CASE_END
+
 		XDEBUG_STR_CASE("notify_ok")
 			xdebug_xml_add_text(*retval, xdebug_sprintf("%ld", XG_DBG(context).send_notifications));
 			xdebug_xml_add_attribute(*retval, "supported", "1");
@@ -1667,6 +1672,10 @@ DBGP_FUNC(feature_set)
 
 		XDEBUG_STR_CASE("extended_properties")
 			options->extended_properties = strtol(CMD_OPTION_CHAR('v'), NULL, 10);
+		XDEBUG_STR_CASE_END
+
+		XDEBUG_STR_CASE("key_type")
+			options->key_type = strtol(CMD_OPTION_CHAR('v'), NULL, 10);
 		XDEBUG_STR_CASE_END
 
 		XDEBUG_STR_CASE("notify_ok")
@@ -2673,6 +2682,7 @@ int xdebug_dbgp_init(xdebug_con *context, int mode)
 	options->max_depth    = 1;
 	options->show_hidden  = 0;
 	options->extended_properties         = 0;
+	options->key_type                    = 0;
 	options->encode_as_extended_property = 0;
 	options->runtime = (xdebug_var_runtime_page*) xdmalloc((options->max_depth + 1) * sizeof(xdebug_var_runtime_page));
 	for (i = 0; i < options->max_depth; i++) {

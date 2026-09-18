@@ -243,6 +243,7 @@ static int xdebug_array_element_export_xml_node(zval *zv_nptr, zend_ulong index_
 	xdebug_xml_node  *node;
 	xdebug_str       *name;
 	xdebug_str        full_name = XDEBUG_STR_INITIALIZER;
+	const char       *key_type;
 
 	if (options->runtime[level].current_element_nr >= options->runtime[level].start_element_nr &&
 		options->runtime[level].current_element_nr < options->runtime[level].end_element_nr)
@@ -253,6 +254,8 @@ static int xdebug_array_element_export_xml_node(zval *zv_nptr, zend_ulong index_
 		if (!HASH_KEY_IS_NUMERIC(hash_key)) { /* string key */
 			zend_string *i_string = zend_string_init(HASH_APPLY_KEY_VAL(hash_key), HASH_APPLY_KEY_LEN(hash_key) - 1, 0);
 			zend_string *tmp_fullname_zstr;
+
+			key_type = "string";
 
 			tmp_fullname_zstr = xdebug_addslashes(i_string);
 
@@ -270,6 +273,8 @@ static int xdebug_array_element_export_xml_node(zval *zv_nptr, zend_ulong index_
 		} else {
 			char *tmp_idx = xdebug_sprintf(XDEBUG_INT_FMT, index_key);
 
+			key_type = "int";
+
 			name = xdebug_str_create(tmp_idx, strlen(tmp_idx));
 			if (parent_name) {
 				xdebug_str_add_str(&full_name, parent_name);
@@ -285,6 +290,9 @@ static int xdebug_array_element_export_xml_node(zval *zv_nptr, zend_ulong index_
 		add_xml_attribute_or_element(options, node, "name", 4, name);
 		if (full_name.l) {
 			add_xml_attribute_or_element(options, node, "fullname", 8, &full_name);
+		}
+		if (options->key_type) {
+			xdebug_xml_add_attribute(node, "xdebug:key_type", key_type);
 		}
 
 		xdebug_xml_add_child(parent, node);

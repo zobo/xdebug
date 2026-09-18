@@ -969,6 +969,7 @@ xdebug_var_export_options* xdebug_var_export_options_from_ini(void)
 	options->show_hidden = 0;
 	options->show_location = 1;
 	options->extended_properties = 0;
+	options->key_type = 0;
 	options->encode_as_extended_property = 0;
 
 	if (options->max_children == -1 || options->max_children > XDEBUG_MAX_INT) {
@@ -995,7 +996,7 @@ xdebug_var_export_options* xdebug_var_export_options_from_ini(void)
 	return options;
 }
 
-xdebug_var_export_options xdebug_var_nolimit_options = { XDEBUG_MAX_INT, XDEBUG_MAX_INT, 1023, 1, 0, 0, 0, NULL, 0 };
+xdebug_var_export_options xdebug_var_nolimit_options = { XDEBUG_MAX_INT, XDEBUG_MAX_INT, 1023, 1, 0, 0, 0, 0, NULL, 0 };
 
 xdebug_var_export_options* xdebug_var_get_nolimit_options(void)
 {
