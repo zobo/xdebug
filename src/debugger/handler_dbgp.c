@@ -1675,7 +1675,7 @@ DBGP_FUNC(feature_set)
 		XDEBUG_STR_CASE_END
 
 		XDEBUG_STR_CASE("key_type")
-			options->key_type = strtol(CMD_OPTION_CHAR('v'), NULL, 10);
+			options->key_type = strtol(CMD_OPTION_CHAR('v'), NULL, 10) ? 1 : 0;
 		XDEBUG_STR_CASE_END
 
 		XDEBUG_STR_CASE("notify_ok")

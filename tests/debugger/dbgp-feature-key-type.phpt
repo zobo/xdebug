@@ -18,6 +18,8 @@ $commands = array(
 	'property_get -d 0 -c 0 -n $data',
 	'feature_set -n key_type -v 1',
 	'feature_get -n key_type',
+	'feature_set -n key_type -v 2',
+	'feature_get -n key_type',
 	'property_get -d 0 -c 0 -n $data',
 	'detach',
 );
@@ -56,10 +58,18 @@ dbgpRunFile( $filename, $commands );
 <?xml version="1.0" encoding="iso-8859-1"?>
 <response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" command="feature_get" transaction_id="7" feature_name="key_type" supported="1"><![CDATA[1]]></response>
 
--> property_get -i 8 -d 0 -c 0 -n $data
+-> feature_set -i 8 -n key_type -v 2
 <?xml version="1.0" encoding="iso-8859-1"?>
-<response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" command="property_get" transaction_id="8"><property name="$data" fullname="$data" type="array" children="1" numchildren="2" page="0" pagesize="32"><property name="0" fullname="$data[0]" xdebug:key_type="int" type="int"><![CDATA[42]]></property><property name="foo" fullname="$data[&quot;foo&quot;]" xdebug:key_type="string" type="int"><![CDATA[84]]></property></property></response>
+<response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" command="feature_set" transaction_id="8" feature="key_type" success="1"></response>
 
--> detach -i 9
+-> feature_get -i 9 -n key_type
 <?xml version="1.0" encoding="iso-8859-1"?>
-<response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" command="detach" transaction_id="9" status="stopping" reason="ok"></response>
+<response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" command="feature_get" transaction_id="9" feature_name="key_type" supported="1"><![CDATA[1]]></response>
+
+-> property_get -i 10 -d 0 -c 0 -n $data
+<?xml version="1.0" encoding="iso-8859-1"?>
+<response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" command="property_get" transaction_id="10"><property name="$data" fullname="$data" type="array" children="1" numchildren="2" page="0" pagesize="32"><property name="0" fullname="$data[0]" xdebug:key_type="int" type="int"><![CDATA[42]]></property><property name="foo" fullname="$data[&quot;foo&quot;]" xdebug:key_type="string" type="int"><![CDATA[84]]></property></property></response>
+
+-> detach -i 11
+<?xml version="1.0" encoding="iso-8859-1"?>
+<response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" command="detach" transaction_id="11" status="stopping" reason="ok"></response>
